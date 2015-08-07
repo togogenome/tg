@@ -2,7 +2,10 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.3'
 
+gem 'bootstrap-sass'
+gem "compass-rails", github: "Compass/compass-rails", branch: "master"
 gem 'coffee-rails', '~> 4.1.0'
+gem 'font-awesome-sass-rails'
 gem 'haml-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
