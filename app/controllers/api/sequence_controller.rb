@@ -1,7 +1,5 @@
 class Api::SequenceController < Api::ApplicationController
-  def index
-  end
-
-  def search
+  def search(fragment)
+    render json: {length: fragment.length}
   end
 end
