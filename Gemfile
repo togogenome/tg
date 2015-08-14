@@ -4,6 +4,8 @@ gem 'rails', '4.2.3'
 
 gem 'action_args'
 gem 'bootstrap-sass'
+gem 'bio' # 'bio-gggenome' dependency gem
+gem 'bio-gggenome'
 gem "compass-rails", github: "Compass/compass-rails", branch: "master"
 gem 'coffee-rails', '~> 4.1.0'
 gem 'font-awesome-sass-rails'
