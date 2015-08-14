@@ -2,31 +2,21 @@
   #search-methods-container
     %ul#search-methods-selector
       %li
-        %a{href: "#facet", data: {toggle: :tab, target: "#facet-method, #facet-result"}} Facet
+        %a{href: "#facet", data: {toggle: :tab}} Facet
       %li.current.active
-        %a{href: "#sequence", data: {toggle: :tab, target: "#sequence-method, #sequence-result"}} Sequence
+        %a{href: "#sequence", data: {toggle: :tab}} Sequence
       %li
-        %a{href: "#converter", data: {toggle: :tab, target: "#converter-method, #converter-result"}} ID converter
+        %a{href: "#converter", data: {toggle: :tab}} ID converter
       %li
-        %a{href: "#resolver", data: {toggle: :tab, target: "#resolver-method, #resolver-result"}} ID resolver
+        %a{href: "#resolver", data: {toggle: :tab}} ID resolver
       %li{class: "search-methods-visibility-button"} Hide
 
-    #methods.tab-content
-      #facet-method.tab-pane
+    .tab-content
+      #facet.tab-pane
         = react_component('FacetPage')
-      #sequence-method.tab-pane.active
-        = react_component('SequenceForm')
-      #converter-method.tab-pane
+      #sequence.tab-pane.active
+        = react_component('SequencePage')
+      #converter.tab-pane
         = react_component('ConverterPage')
-      #resolver-method.tab-pane
+      #resolver.tab-pane
         = react_component('ResolverPage')
-
-  .tab-content#genomes.row-fluid
-    #facet-result.tab-pane
-      Facet result
-    #sequence-result.tab-pane.active
-      = react_component('SequenceResult')
-    #converter-method.tab-pane
-      ID Converter result
-    #resolver-method.tab-pane
-      ID Resolver result
