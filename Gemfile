@@ -8,8 +8,10 @@ gem 'bio' # 'bio-gggenome' dependency gem
 gem 'bio-gggenome'
 gem "compass-rails", github: "Compass/compass-rails", branch: "master"
 gem 'coffee-rails', '~> 4.1.0'
+gem 'faraday'
 gem 'font-awesome-sass-rails'
 gem 'haml-rails'
+gem 'hashie'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'react-rails'
@@ -23,4 +25,3 @@ group :development, :test do
   gem 'spring'
   gem 'web-console', '~> 2.0'
 end
-

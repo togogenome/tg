@@ -1,0 +1,33 @@
+DEFINE sql:select-option "order"
+PREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/nucleotide/>
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+
+SELECT DISTINCT ?name ?sequence_ontology ?sequence_ontology_name ?locus_tag ?product
+FROM <http://togogenome.org/graph/so>
+FROM <http://togogenome.org/graph/refseq>
+WHERE {
+  {
+    SELECT DISTINCT ?name ?sequence_ontology ?sequence_ontology_name ?feature
+    WHERE {
+      VALUES (?name ?position ?position_end ?refseq ?strand ) {
+        <%= bind_values %>
+      }
+      ?refseq_uri insdc:sequence_version ?refseq .
+      ?refseq_uri insdc:sequence ?sequence .
+
+      ?feature obo:so_part_of+ ?sequence .
+      ?feature faldo:location ?loc .
+      ?loc faldo:begin/faldo:position ?feature_position_beg .
+      ?loc faldo:end/faldo:position ?feature_position_end .
+      ?feature rdfs:subClassOf ?sequence_ontology .
+      ?sequence_ontology rdfs:label ?sequence_ontology_name .
+
+      BIND ( IF (?strand = "+", ?feature_position_beg, ?feature_position_end) AS ?begin ).
+      BIND ( IF (?strand = "+", ?feature_position_end, ?feature_position_beg) AS ?end ).
+      FILTER(?begin < ?position && ?position < ?end && ?begin != 1)
+    }
+  }
+  OPTIONAL { ?feature insdc:locus_tag ?locus_tag . }
+  OPTIONAL { ?feature insdc:product ?product .}
+}

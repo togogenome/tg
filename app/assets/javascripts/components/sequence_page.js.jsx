@@ -37,19 +37,64 @@ var SequenceSearchForm = React.createClass({
   }
 });
 
-var SequenceSearchResultRaw = React.createClass({
+var LocusTagListItem = React.createClass({
   render: function() {
-    var {name, position, position_end, snippet} = this.props.gene;
+    var url = "/gene/" + this.props.taxonomy + ":" +this.props.locus_tag;
+    return (
+      <li><a href={url} target="_blank">{this.props.locus_tag}</a></li>
+    );
+  }
+})
+
+var ProductListItem = React.createClass({
+  render: function() {
+    return (
+      <li>{this.props.product}</li>
+    );
+  }
+})
+
+var SequenceOntologyListItem = React.createClass({
+  render: function() {
+    var {name, uri} = this.props.ontology;
+    return (
+      <li><a href={uri} target="_blank">{name}</a></li>
+    );
+  }
+})
+
+var SequenceSearchResultRaw = React.createClass({
+  _highlightQuery: function(snippet, query) {
+      var regex = new RegExp("(" + query + ")", "gi");
+      return snippet.replace(regex, "<strong>$1</strong>");
+  },
+  render: function() {
+    var {name, taxonomy, position, position_end, snippet, fragment} = this.props.gene;
+    var locusTagList = this.props.gene.locus_tags.map(function(locus_tag, index) {
+      return (
+        <LocusTagListItem taxonomy={taxonomy} locus_tag={locus_tag} key={index} />
+      );
+    });
+    var productList = this.props.gene.products.map(function(product, index) {
+      return (
+        <ProductListItem product={product} key={index} />
+      );
+    });
+    var sequenceOntologyList = this.props.gene.sequence_ontologies.map(function(ontology, index) {
+      return (
+        <SequenceOntologyListItem ontology={ontology} key={index} />
+      );
+    });
 
     return (
       <tr className="sequenceSearchResultRaw">
         <td>{name}</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><ul>{locusTagList}</ul></td>
+        <td><ul>{productList}</ul></td>
+        <td><ul>{sequenceOntologyList}</ul></td>
         <td>{position}</td>
         <td>{position_end}</td>
-        <td>{snippet}</td>
+        <td><span dangerouslySetInnerHTML={{__html: this._highlightQuery(snippet, fragment)}} /></td>
       </tr>
     );
   }
