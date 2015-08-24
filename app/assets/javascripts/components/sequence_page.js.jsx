@@ -8,30 +8,17 @@ var SequenceSearchForm = React.createClass({
     this.props.onSearchSubmit({fragment: fragment});
   },
   render: function() {
-    var divStyle = {
-      margin: 0,
-      padding: 0,
-      display: 'inline'
-    }
-
     return (
       <div className='sequenceSearchForm'>
-        <div className='method-container' id='sequence-container'>
-          <div className='inner'>
-            <form accept-charset="UTF-8" className="form-search" method="get" onSubmit={this.handleSubmit}>
-              <div style={divStyle}>
-                <input name="utf8" type="hidden" value="✓" />
-              </div>
-              <input className="input-xlarge" id="fragment" name="fragment" type="search" ref='fragment' />
-              <button className="tg-button" name="button" type="submit">Search</button>
-              </form>
-            <div className='small-note'>
-              <p>
-                Search genomic sequences by an arbitrary sub-string of any DNA sequence fragments (e.g., "TGGAATTGTGAGCGGATAACAATT" for <i>lac</i> operator reported by <a href="http://www.ncbi.nlm.nih.gov/pubmed/4587255" target="_blank">Gilbert W and Maxam A, 1973</a>)
-              </p>
-            </div>
-          </div>
-        </div>
+        <form className="form-inline" method="get" onSubmit={this.handleSubmit}>
+          <fieldset className="form-group">
+            <input className="form-control" id="fragment" name="fragment" type="text" ref='fragment' />
+            <button className="btn" type="submit">Search</button>
+          </fieldset>
+        </form>
+        <small className='text-muted'>
+          Search genomic sequences by an arbitrary sub-string of any DNA sequence fragments (e.g., "TGGAATTGTGAGCGGATAACAATT" for <i>lac</i> operator reported by <a href="http://www.ncbi.nlm.nih.gov/pubmed/4587255" target="_blank">Gilbert W and Maxam A, 1973</a>)
+        </small>
       </div>
     );
   }
@@ -108,9 +95,9 @@ var SequenceSearchResultTable = React.createClass({
       );
     });
     return (
-      <div className='sequenceSearchResultTable' id='sequence'>
-        <table className='table table-striped table-bordered table-hover table-condensed'>
-          <thead>
+      <div className='sequenceSearchResultTable'>
+        <table className='table table-striped table-bordered table-hover'>
+          <thead className='thead-inverse'>
             <tr>
               <th>Sequence name</th>
               <th>Locus tag</th>

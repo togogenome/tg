@@ -1,22 +1,21 @@
-.main-container
-  #search-methods-container
-    %ul#search-methods-selector
-      %li
-        %a{href: "#facet", data: {toggle: :tab}} Facet
-      %li.current.active
-        %a{href: "#sequence", data: {toggle: :tab}} Sequence
-      %li
-        %a{href: "#converter", data: {toggle: :tab}} ID converter
-      %li
-        %a{href: "#resolver", data: {toggle: :tab}} ID resolver
-      %li{class: "search-methods-visibility-button"} Hide
+%nav.navbar.navbar-inverse.navbar-fixed-top
+  = link_to 'TogoGenome', root_path, class: 'navbar-brand'
+  %ul.nav.nav-pills.nav-tabs
+    %li.nav-item
+      %a.nav-link{href: "#facet", data: {toggle: :tab}} Facet
+    %li.nav-item
+      %a.nav-link.active{href: "#sequence", data: {toggle: :tab}} Sequence
+    %li.nav-item
+      %a.nav-link{href: "#converter", data: {toggle: :tab}} ID converter
+    %li.nav-item
+      %a.nav-link{href: "#resolver", data: {toggle: :tab}} ID resolver
 
-    .tab-content
-      #facet.tab-pane
-        = react_component('FacetPage')
-      #sequence.tab-pane.active
-        = react_component('SequencePage')
-      #converter.tab-pane
-        = react_component('ConverterPage')
-      #resolver.tab-pane
-        = react_component('ResolverPage')
+  .tab-content
+    #facet.tab-pane
+      = react_component('FacetPage')
+    #sequence.tab-pane.active
+      = react_component('SequencePage')
+    #converter.tab-pane
+      = react_component('ConverterPage')
+    #resolver.tab-pane
+      = react_component('ResolverPage')
