@@ -3,6 +3,7 @@ module SequenceSearch
     include Queryable
 
     def self.search(fragment)
+      metadescription_size = 10
       genomes = Bio::GGGenome.search('prok', 0, fragment)['results']
 
       binds = genomes.map {|genome|
@@ -15,11 +16,11 @@ module SequenceSearch
       genomes.map do |genome|
         so = results.rows.select {|r| r.name == genome['name'] }
 
-        start_index = genome['position'] - genome['snippet_pos'] - 10
-        end_index   = genome['position_end'] - genome['snippet_pos'] + 10
+        start_index = genome['position'] - genome['snippet_pos'] - metadescription_size
+        end_index   = genome['position_end'] - genome['snippet_pos'] + metadescription_size
 
         genome.to_h.merge(
-          fragment: fragment,
+          metadescription_size: metadescription_size,
           snippet: genome['snippet'][start_index..end_index],
           sequence_ontologies: so.map {|r| {uri: r.sequence_ontology, name: r.sequence_ontology_name} },
           locus_tags: so.map {|r| r.locus_tag }.compact.uniq,

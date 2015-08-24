@@ -51,12 +51,11 @@ var SequenceOntologyListItem = React.createClass({
 })
 
 var SequenceSearchResultRaw = React.createClass({
-  _highlightQuery: function(snippet, query) {
-      var regex = new RegExp("(" + query + ")", "gi");
-      return snippet.replace(regex, "<strong>$1</strong>");
+  _highlightQuery: function(text, index) {
+    return text.slice(0, index) + "<mark>" + text.slice(index, -index) + "</mark>" + text.slice(-index);
   },
   render: function() {
-    var {name, taxonomy, position, position_end, snippet, fragment} = this.props.gene;
+    var {name, taxonomy, position, position_end, snippet, metadescription_size} = this.props.gene;
     var locusTagList = this.props.gene.locus_tags.map(function(locus_tag, index) {
       return (
         <LocusTagListItem taxonomy={taxonomy} locus_tag={locus_tag} key={index} />
@@ -81,7 +80,7 @@ var SequenceSearchResultRaw = React.createClass({
         <td><ul>{sequenceOntologyList}</ul></td>
         <td>{position}</td>
         <td>{position_end}</td>
-        <td><span dangerouslySetInnerHTML={{__html: this._highlightQuery(snippet, fragment)}} /></td>
+        <td><span dangerouslySetInnerHTML={{__html: this._highlightQuery(snippet, metadescription_size)}} /></td>
       </tr>
     );
   }
