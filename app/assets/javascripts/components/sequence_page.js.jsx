@@ -1,5 +1,5 @@
 var SequenceSearchForm = React.createClass({
-  handleSubmit: function(e) {
+  handleSubmit(e) {
     e.preventDefault();
     var fragment = React.findDOMNode(this.refs.fragment).value.trim();
     if (!fragment) {
@@ -7,9 +7,9 @@ var SequenceSearchForm = React.createClass({
     }
     this.props.onSearchSubmit({fragment: fragment});
   },
-  render: function() {
+  render() {
     return (
-      <div className='sequenceSearchForm'>
+      <div>
         <form className="form-inline" method="get" onSubmit={this.handleSubmit}>
           <fieldset className="form-group">
             <input className="form-control" id="fragment" name="fragment" type="text" ref='fragment' />
@@ -25,7 +25,7 @@ var SequenceSearchForm = React.createClass({
 });
 
 var LocusTagListItem = React.createClass({
-  render: function() {
+  render() {
     var url = "/gene/" + this.props.taxonomy + ":" +this.props.locus_tag;
     return (
       <li><a href={url} target="_blank">{this.props.locus_tag}</a></li>
@@ -34,7 +34,7 @@ var LocusTagListItem = React.createClass({
 })
 
 var ProductListItem = React.createClass({
-  render: function() {
+  render() {
     return (
       <li>{this.props.product}</li>
     );
@@ -42,7 +42,7 @@ var ProductListItem = React.createClass({
 })
 
 var SequenceOntologyListItem = React.createClass({
-  render: function() {
+  render() {
     var {name, uri} = this.props.ontology;
     return (
       <li><a href={uri} target="_blank">{name}</a></li>
@@ -51,10 +51,10 @@ var SequenceOntologyListItem = React.createClass({
 })
 
 var SequenceSearchResultRaw = React.createClass({
-  _highlightQuery: function(text, index) {
+  _highlightQuery(text, index) {
     return text.slice(0, index) + "<mark>" + text.slice(index, -index) + "</mark>" + text.slice(-index);
   },
-  render: function() {
+  render() {
     var {name, taxonomy, position, position_end, snippet, metadescription_size} = this.props.gene;
     var locusTagList = this.props.gene.locus_tags.map(function(locus_tag, index) {
       return (
@@ -73,7 +73,7 @@ var SequenceSearchResultRaw = React.createClass({
     });
 
     return (
-      <tr className="sequenceSearchResultRaw">
+      <tr>
         <td>{name}</td>
         <td><ul>{locusTagList}</ul></td>
         <td><ul>{productList}</ul></td>
@@ -87,37 +87,35 @@ var SequenceSearchResultRaw = React.createClass({
 })
 
 var SequenceSearchResultTable = React.createClass({
-  render: function() {
+  render() {
     var sequenceSearchResultRaws = this.props.data.map(function(gene, index) {
       return (
         <SequenceSearchResultRaw gene={gene} key={index} />
       );
     });
     return (
-      <div className='sequenceSearchResultTable'>
-        <table className='table table-striped table-bordered table-hover'>
-          <thead className='thead-inverse'>
-            <tr>
-              <th>Sequence name</th>
-              <th>Locus tag</th>
-              <th>Product</th>
-              <th>Sequence ontology</th>
-              <th>Position begin</th>
-              <th>Position end</th>
-              <th>Sequence</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sequenceSearchResultRaws}
-          </tbody>
-        </table>
-      </div>
+      <table className='table table-striped table-bordered table-hover'>
+        <thead className='thead-inverse'>
+          <tr>
+            <th>Sequence name</th>
+            <th>Locus tag</th>
+            <th>Product</th>
+            <th>Sequence ontology</th>
+            <th>Position begin</th>
+            <th>Position end</th>
+            <th>Sequence</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sequenceSearchResultRaws}
+        </tbody>
+      </table>
     );
   }
 });
 
 var SequencePage = React.createClass({
-  handleSearchSubmit: function(fragment) {
+  handleSearchSubmit(fragment) {
     $.get(
       '/api/sequence/search.json',
       fragment
@@ -127,13 +125,13 @@ var SequencePage = React.createClass({
       }.bind(this)
     )
   },
-  getInitialState: function() {
+  getInitialState() {
     return {data: []};
   },
-  render: function() {
+  render() {
     var sequenceSearchResult = (this.state.data.length === 0) ? "" : <SequenceSearchResultTable data={this.state.data} />;
     return (
-      <div className='sequencePage'>
+      <div>
         <SequenceSearchForm onSearchSubmit={this.handleSearchSubmit} />
         {sequenceSearchResult}
       </div>
