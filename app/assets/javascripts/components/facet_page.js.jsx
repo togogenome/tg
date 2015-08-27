@@ -1,3 +1,5 @@
+var React = require('react');
+
 var FacetPage = React.createClass({
 
   render: function() {
@@ -5,3 +7,4 @@ var FacetPage = React.createClass({
   }
 });
 
+module.exports = FacetPage;

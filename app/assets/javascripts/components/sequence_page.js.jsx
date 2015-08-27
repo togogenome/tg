@@ -1,3 +1,5 @@
+var React = require('react');
+
 var SequenceSearchForm = React.createClass({
   handleSubmit(e) {
     e.preventDefault();
@@ -138,3 +140,5 @@ var SequencePage = React.createClass({
     );
   }
 });
+
+module.exports = SequencePage;

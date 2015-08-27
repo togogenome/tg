@@ -10,7 +10,7 @@ gem 'faraday'
 gem 'haml-rails'
 gem 'hashie'
 gem 'jbuilder', '~> 2.0'
-gem 'react-rails'
+gem 'jquery-rails'
 gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'turbolinks'
@@ -21,8 +21,4 @@ group :development, :test do
   gem 'byebug'
   gem 'spring'
   gem 'web-console', '~> 2.0'
-end
-
-source 'https://rails-assets.org' do
-  gem 'rails-assets-bootstrap', '~> 4.0.0.alpha'
 end

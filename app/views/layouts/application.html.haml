@@ -5,9 +5,7 @@
     %meta(charset='utf-8')
     %title TogoGenome
     = stylesheet_link_tag    'application', media: 'all'
-    = javascript_include_tag 'application'
     = csrf_meta_tags
 
-  %body(data-spy='scroll' data-target='#navbar')
-    .container-fluid
-      = yield
+  %body
+    = javascript_include_tag 'application'
