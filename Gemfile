@@ -7,6 +7,7 @@ gem 'bio' # 'bio-gggenome' dependency gem
 gem 'bio-gggenome'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'faraday'
+gem 'foreman'
 gem 'haml-rails'
 gem 'hashie'
 gem 'jbuilder', '~> 2.0'
