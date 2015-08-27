@@ -1,9 +1,23 @@
 var React = require('react');
 
+var mui = require('material-ui'),
+  {
+    TextField, RaisedButton, Paper,
+    Table, TableBody, TableHeader, TableFooter, TableRow, TableHeaderColumn, TableRowColumn, TextField, Toggle
+  } = mui;
+
+var styles = {
+      paper: {
+        padding: '1em'
+      }
+    }
+
+
 var SequenceSearchForm = React.createClass({
   handleSubmit(e) {
     e.preventDefault();
-    var fragment = React.findDOMNode(this.refs.fragment).value.trim();
+
+    var fragment = this.refs.fragment.getValue().trim();
     if (!fragment) {
       return;
     }
@@ -12,13 +26,13 @@ var SequenceSearchForm = React.createClass({
   render() {
     return (
       <div>
-        <form className="form-inline" method="get" onSubmit={this.handleSubmit}>
-          <fieldset className="form-group">
-            <input className="form-control" id="fragment" name="fragment" type="text" ref='fragment' />
-            <button className="btn" type="submit">Search</button>
-          </fieldset>
-        </form>
-        <small className='text-muted'>
+        <Paper zDepth={3} style={styles.paper}>
+          <form method="get" onSubmit={this.handleSubmit}>
+            <TextField ref='fragment' fullWidth='true' />
+            <RaisedButton type='submit' label="Search" />
+          </form>
+        </Paper>
+        <small>
           Search genomic sequences by an arbitrary sub-string of any DNA sequence fragments (e.g., "TGGAATTGTGAGCGGATAACAATT" for <i>lac</i> operator reported by <a href="http://www.ncbi.nlm.nih.gov/pubmed/4587255" target="_blank">Gilbert W and Maxam A, 1973</a>)
         </small>
       </div>
@@ -75,43 +89,51 @@ var SequenceSearchResultRaw = React.createClass({
     });
 
     return (
-      <tr>
-        <td>{name}</td>
-        <td><ul>{locusTagList}</ul></td>
-        <td><ul>{productList}</ul></td>
-        <td><ul>{sequenceOntologyList}</ul></td>
-        <td>{position}</td>
-        <td>{position_end}</td>
-        <td><span dangerouslySetInnerHTML={{__html: this._highlightQuery(snippet, metadescription_size)}} /></td>
-      </tr>
+      <TableRow>
+        <TableRowColumn>{name}</TableRowColumn>
+        <TableRowColumn><ul>{locusTagList}</ul></TableRowColumn>
+        <TableRowColumn><ul>{productList}</ul></TableRowColumn>
+        <TableRowColumn><ul>{sequenceOntologyList}</ul></TableRowColumn>
+        <TableRowColumn>{position}</TableRowColumn>
+        <TableRowColumn>{position_end}</TableRowColumn>
+        <TableRowColumn><span dangerouslySetInnerHTML={{__html: this._highlightQuery(snippet, metadescription_size)}} /></TableRowColumn>
+      </TableRow>
     );
   }
 })
 
 var SequenceSearchResultTable = React.createClass({
   render() {
+    this.state = {
+      stripedRows: true,
+      showRowHover: false,
+    };
+
+
     var sequenceSearchResultRaws = this.props.data.map(function(gene, index) {
       return (
         <SequenceSearchResultRaw gene={gene} key={index} />
       );
     });
     return (
-      <table className='table table-striped table-bordered table-hover'>
-        <thead className='thead-inverse'>
-          <tr>
-            <th>Sequence name</th>
-            <th>Locus tag</th>
-            <th>Product</th>
-            <th>Sequence ontology</th>
-            <th>Position begin</th>
-            <th>Position end</th>
-            <th>Sequence</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sequenceSearchResultRaws}
-        </tbody>
-      </table>
+      <Paper zDepth={3} style={styles.paper}>
+        <Table>
+          <TableHeader displaySelectAll={false}>
+            <TableRow>
+              <TableHeaderColumn>Sequence name</TableHeaderColumn>
+              <TableHeaderColumn>Locus tag</TableHeaderColumn>
+              <TableHeaderColumn>Product</TableHeaderColumn>
+              <TableHeaderColumn>Sequence ontology</TableHeaderColumn>
+              <TableHeaderColumn>Position begin</TableHeaderColumn>
+              <TableHeaderColumn>Position end</TableHeaderColumn>
+              <TableHeaderColumn>Sequence</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody showRowHover={true} stripedRows={true}>
+            {sequenceSearchResultRaws}
+          </TableBody>
+        </Table>
+      </Paper>
     );
   }
 });
